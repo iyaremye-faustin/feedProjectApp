@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('national_id')->unique();
+            $table->integer('provinceId');
+            $table->integer('districtId')->nullable();
+            $table->integer('sectorId')->nullable();
+            $table->integer('roleId');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
