@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\District;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,8 @@ return new class extends Migration
         Schema::create('sectors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('districtId');
+            $table->unsignedBigInteger('districtId');
+            $table->foreign('districtId')->references('id')->on('districts');
             $table->timestamps();
         });
     }
