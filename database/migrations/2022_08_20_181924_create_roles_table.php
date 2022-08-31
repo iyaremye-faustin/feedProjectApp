@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -19,6 +20,10 @@ return new class extends Migration
             $table->string('description');
             $table->timestamps();
         });
+        DB::insert('insert into roles (name, description) values (?, ?)', ['Administrator', 'Administrator user in the highest leadership level of the company ']);
+        DB::insert('insert into roles (name, description) values (?, ?)', ['Province Representative', 'The Employee at Province level']);
+        DB::insert('insert into roles (name, description) values (?, ?)', ['District Representative', 'The Employee at District level']);
+        DB::insert('insert into roles (name, description) values (?, ?)', ['Sector Representative', 'The Employee at Sector level']);
     }
 
     /**

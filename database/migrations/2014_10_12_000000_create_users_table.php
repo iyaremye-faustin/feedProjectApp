@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('national_id')->unique();
+            $table->string('idNumber')->unique();
             $table->integer('provinceId');
             $table->integer('districtId')->nullable();
             $table->integer('sectorId')->nullable();
