@@ -19,5 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
 Route::resource('/province', ProvinceController::class);
 Route::resource('/sector', SectorController::class);
+
+Route::post('/user',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::resource('roles', '\App\Http\Controllers\RoleController');
+
