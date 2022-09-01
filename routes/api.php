@@ -18,5 +18,5 @@ Route::post('/user',[\App\Http\Controllers\Auth\UserRegisterController::class,'u
 Route::resource('roles', '\App\Http\Controllers\RoleController');
 Route::post("/login",[\App\Http\Controllers\UserController::class,'login']);
 Route::middleware('auth:sanctum')->post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
-Route::resource('/province', ProvinceController::class);
-Route::resource('/sector', SectorController::class);
+Route::resource('/provinces', '\App\Http\Controllers\ProvinceController');
+Route::resource('/sectors', '\App\Http\Controllers\SectorController');
