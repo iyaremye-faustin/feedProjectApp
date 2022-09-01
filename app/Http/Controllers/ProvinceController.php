@@ -15,20 +15,15 @@ class ProvinceController extends Controller
     {
         $provinces = Province::orderBy('id', 'DESC')
                     ->get();
-
-        return response()->json([
+        $data = [
+            'message' => 'List of Provinces',
             'provinces' => $provinces,
-        ]);
-    }
+            'status' => 200,
+        ];            
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
-    public function create()
-    {
-        //
+        return $this->successResponse($data, 200);
     }
+    
 
     /**
      * Store a newly created resource in storage.
@@ -47,10 +42,7 @@ class ProvinceController extends Controller
         ]);
 
         //return response (stored province data)
-        return response()->json([
-            'message' => 'Province created successfully',
-            'province' => $province,
-        ], 200);
+        return $this->successResponse($province, 200, 'Province created successfully');
     }
 
     /**
@@ -59,19 +51,15 @@ class ProvinceController extends Controller
      */
     public function show(Province $province)
     {
-        //single province
-        return response()->json([
-            'province' => $province,
-        ]);
-    }
+        //single sector
+        $data = [
+            'message' => 'Sector Detail',
+            'sector' => $province,
+            'status' => 200,
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     */
-    public function edit(Province $province)
-    {
-        
+        return $this->successResponse($data, 200);
+
     }
 
     /**
@@ -91,23 +79,13 @@ class ProvinceController extends Controller
         ]);
 
         //return response (updated province data)
-        return response()->json([
+        $data = [
             'message' => 'Province updated successfully',
             'province' => $province,
-        ], 200);
+            'status' => 200,
+        ];
+
+        return $this->successResponse($data, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     */
-    public function destroy(Province $province)
-    {
-        $province->delete();
-
-         //return response (updated province data)
-        return response()->json([
-            'message' => 'Province deleted successfully',
-        ], 200);
-    }
 }

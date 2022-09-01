@@ -13,21 +13,16 @@ class SectorController extends Controller
      * */
     public function index()
     {
-        $sector = Sector::orderBy('id', 'DESC')
+        $sectors = Sector::orderBy('id', 'DESC')
                     ->get();
+        
+        $data = [
+            'message' => 'List of sectors',
+            'sectors' => $sectors,
+            'status' => 200,
+        ];
 
-        return response()->json([
-            'sector' => $sector,
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     */
-    public function create()
-    {
-        //
+        return $this->successResponse($data, 200);
     }
 
     /**
@@ -39,7 +34,7 @@ class SectorController extends Controller
         //data validation
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:20'],
-            'districtId' => ['required']
+            'districtId' => ['required'],
         ]);
         
         //data creation
@@ -49,10 +44,13 @@ class SectorController extends Controller
         ]);
 
         //return response (stored sector data)
-        return response()->json([
+        $data = [
             'message' => 'Sector created successfully',
             'sector' => $sector,
-        ], 200);
+            'status' => 200,
+        ];
+
+        return $this->successResponse($data, 200);
     }
 
     /**
@@ -62,18 +60,13 @@ class SectorController extends Controller
     public function show(Sector $sector)
     {
         //single sector
-        return response()->json([
+        $data = [
+            'message' => 'Sector Detail',
             'sector' => $sector,
-        ]);
-    }
+            'status' => 200,
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     */
-    public function edit(Sector $sector)
-    {
-        
+        return $this->successResponse($data, 200);
     }
 
     /**
@@ -95,23 +88,14 @@ class SectorController extends Controller
         ]);
 
         //return response (updated sector data)
-        return response()->json([
+        $data = [
             'message' => 'Sector updated successfully',
             'sector' => $sector,
-        ], 200);
+            'status' => 200,
+         ];
+
+         return $this->successResponse($data, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     */
-    public function destroy(Sector $sector)
-    {
-        $sector->delete();
-
-         //return response (updated sector data)
-        return response()->json([
-            'message' => 'Sector deleted successfully',
-        ], 200);
-    }
+    
 }
