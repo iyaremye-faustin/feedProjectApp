@@ -8,78 +8,94 @@ use Illuminate\Http\Request;
 class SectorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the sector.
      *
-     * @return \Illuminate\Http\Response
-     */
+     * */
     public function index()
     {
-        //
-    }
+        $sectors = Sector::orderBy('id', 'DESC')
+                    ->get();
+        
+        $data = [
+            'message' => 'List of sectors',
+            'sectors' => $sectors,
+            'status' => 200,
+        ];
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->successResponse($data, 200);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //data validation
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:20'],
+            'districtId' => ['required'],
+        ]);
+        
+        //data creation
+        $sector = Sector::create([
+            'name' => $request->name,  
+            'districtId' => $request->districtId,
+        ]);
+
+        //return response (stored sector data)
+        $data = [
+            'message' => 'Sector created successfully',
+            'sector' => $sector,
+            'status' => 200,
+        ];
+
+        return $this->successResponse($data, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
      */
     public function show(Sector $sector)
     {
-        //
-    }
+        //single sector
+        $data = [
+            'message' => 'Sector Detail',
+            'sector' => $sector,
+            'status' => 200,
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Sector $sector)
-    {
-        //
+        return $this->successResponse($data, 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Sector $sector)
     {
-        //
+        //data validation
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:20'],
+            'districtId' => ['required']
+        ]);
+        
+        //update data
+        $sector->update([
+            'name' => $request->name,
+            'districtId' => $request->districtId,  
+        ]);
+
+        //return response (updated sector data)
+        $data = [
+            'message' => 'Sector updated successfully',
+            'sector' => $sector,
+            'status' => 200,
+         ];
+
+         return $this->successResponse($data, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Sector  $sector
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Sector $sector)
-    {
-        //
-    }
+    
 }

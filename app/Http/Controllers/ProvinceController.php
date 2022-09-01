@@ -8,78 +8,84 @@ use Illuminate\Http\Request;
 class ProvinceController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the province.
      *
-     * @return \Illuminate\Http\Response
-     */
+     * */
     public function index()
     {
-        //
-    }
+        $provinces = Province::orderBy('id', 'DESC')
+                    ->get();
+        $data = [
+            'message' => 'List of Provinces',
+            'provinces' => $provinces,
+            'status' => 200,
+        ];            
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return $this->successResponse($data, 200);
     }
+    
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        //
+        //data validation
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:20']
+        ]);
+        
+        //data creation
+        $province = Province::create([
+            'name' => $request->name,  
+        ]);
+
+        //return response (stored province data)
+        return $this->successResponse($province, 200, 'Province created successfully');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
      */
     public function show(Province $province)
     {
-        //
-    }
+        //single sector
+        $data = [
+            'message' => 'Sector Detail',
+            'sector' => $province,
+            'status' => 200,
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Province $province)
-    {
-        //
+        return $this->successResponse($data, 200);
+
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Province $province)
     {
-        //
+        //data validation
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:20']
+        ]);
+        
+        //update data
+        $province->update([
+            'name' => $request->name,  
+        ]);
+
+        //return response (updated province data)
+        $data = [
+            'message' => 'Province updated successfully',
+            'province' => $province,
+            'status' => 200,
+        ];
+
+        return $this->successResponse($data, 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Province  $province
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Province $province)
-    {
-        //
-    }
 }
