@@ -2,80 +2,95 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class UserController extends ApiController
 {
-
-
-
-    // function register(Request $request){
-    //     $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'email' => [
-    //             'required',
-    //             'string',
-    //             'email',
-    //             'max:255',
-    //             Rule::unique(User::class),
-    //         ],
-    //         //'password' =>['required'],
-    //         'national_id' => ['required','digits:10','numeric'],
-    //         'address' => ['required'],
-    //         'role' => ['required']
-    //     ]);
-
-        
-    //     $newuser = User::create([
-    //         'name' => $request['name'],
-    //         'email' => $request['email'],
-    //         'national_id' => Hash::make($request['national_id']),
-    //         'provinceId' => $request['provinceId'],
-    //         'districtId' => $request['districtId'],
-    //         'sectorId' => $request['sectorId'],
-    //         'password' => Hash::make($request['password']),
-    //         //'phone_number' => $request['address'],
-    //         'address' =>$request['address'],
-    //         'roleId' =>$request['roleId'], 
-    //     ])->save();
-
-    //     return response()->json('Thank you welcom!');
-   
-        
-    // }
+     /**
+     * @OA\Post(
+     * path="/api/login",
+     *   tags={"Users"},
+     *   summary="Login a user",
+     *   operationId="loginUser",
+     *   description="Login a user",
+     *   @OA\RequestBody(
+     *       @OA\JsonContent(),
+     *       @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *          type="object",
+     *          required={"email","password"},
+     *          @OA\Property(property="email", type="text"),
+     *          @OA\Property(property="password", type="text"),
+     *        )
+     *       ),
+     *   ),
+     *   @OA\Response(
+     *    response=201,
+     *    description="Successfully logged in",
+     *    @OA\JsonContent(),
+     *   )
+     * )
+     */
 
     function login(Request $request){
-        $request->validate([
-            'email'=>['required','email'],
-            'password'=>['required']
-        ]);
-
+        $rules=[
+            'email'=>'required|email|exists:users,email',
+            'password'=>'required|string',
+        ];
+        $check=Validator::make($request->all(),$rules);
+        if($check->fails()){
+            return $this->errorResponse($check->messages(),400,"Invalid data in the request");
+        }
 
         $user=User::where('email',$request->email)->first();
         if(!$user){
-            return response(['message'=>'User not found'],401);
+            return $this->errorResponse('',401,"Invalid email Address");
         }
-
-        elseif(!Hash::check($request->password,$user->password)){
-
-            return response(['message'=>'wrong password'],401);
+        if(!Hash::check($request->password,$user->password)){
+            return $this->errorResponse('',401,"Invalid email or password");
         }
 
         $token  = $user->createToken('error')->plainTextToken;
-
-        return response([
+        $response=[
+            'message'=>"Logged in successfully",
             'token'=>$token,
-            'user'=>$user
-        ]);
-
+            'user'=>new UserResource($user)];
+        return $this->successResponse($response,200);
     }
 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+
+    /**
+     * @OA\Post(
+     * path="/api/logout",
+     *   summary="Logging out a user",
+     *   description="Log out",
+     *   operationId="Logout",
+     *   tags={"Users"},
+     *   security={ {"bearer":{} } },
+     *
+     *   @OA\Response(
+     *     response=200,
+     *       description="Loggedout successfully",
+     *     @OA\MediaType(
+     *        mediaType="application/json",
+     *      )
+     *   )
+     * )
+     */
     function logout(Request $request){
         $request->user()->tokens()->delete();
-
-        return response(['message'=>'logged out'],201);
+        $data=['message'=>'logged out'];
+        return $this->successResponse($data,200);
     }
 }
