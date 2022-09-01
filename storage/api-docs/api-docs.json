@@ -67,6 +67,158 @@
                 }
             }
         },
+        "/api/provinces": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Get All Provinces",
+                "description": "Get Provinces details",
+                "operationId": "GetProvincesDetails",
+                "responses": {
+                    "200": {
+                        "description": "Fetched successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Register a province",
+                "description": "Register a province",
+                "operationId": "registerProvinces",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successfully registered",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/provinces/{province}": {
+            "get": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Get A Single Province",
+                "description": "Get Provinces details",
+                "operationId": "GetProvinceDetails",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fetched successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Provinces"
+                ],
+                "summary": "Update a province",
+                "description": "update a province",
+                "operationId": "UpdateProvince",
+                "parameters": [
+                    {
+                        "name": "province",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "text"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "application/json": {
+                            "schema": {}
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
         "/api/roles": {
             "get": {
                 "tags": [
@@ -75,6 +227,29 @@
                 "summary": "Get All Roles",
                 "description": "Get roles details",
                 "operationId": "GetRolesDetails",
+                "responses": {
+                    "200": {
+                        "description": "Fetched successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/sectors": {
+            "get": {
+                "tags": [
+                    "Sectors"
+                ],
+                "summary": "Get All Sectors",
+                "description": "Get Sectors details",
+                "operationId": "GetSectorsDetails",
                 "responses": {
                     "200": {
                         "description": "Fetched successfully",

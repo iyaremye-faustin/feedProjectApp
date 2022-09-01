@@ -5,12 +5,30 @@ namespace App\Http\Controllers;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
-class ProvinceController extends Controller
+class ProvinceController extends ApiController
 {
     /**
      * Display a listing of the province.
      *
      * */
+    /**
+     * @OA\Get(
+     * path="/api/provinces",
+     *   summary="Get All Provinces",
+     *   description="Get Provinces details",
+     *   operationId="GetProvincesDetails",
+     *   tags={"Provinces"},
+     *   security={ {"bearer":{} } },
+     *
+     *   @OA\Response(
+     *     response=200,
+     *       description="Fetched successfully",
+     *     @OA\MediaType(
+     *        mediaType="application/json",
+     *      )
+     *   )
+     * )
+     */
     public function index()
     {
         $provinces = Province::orderBy('id', 'DESC')
@@ -18,44 +36,80 @@ class ProvinceController extends Controller
         $data = [
             'message' => 'List of Provinces',
             'provinces' => $provinces,
-            'status' => 200,
-        ];            
-
+        ];
         return $this->successResponse($data, 200);
     }
-    
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * @OA\Post(
+     * path="/api/provinces",
+     *   tags={"Provinces"},
+     *   security={ {"bearer":{} } },
+     *   summary="Register a province",
+     *   operationId="registerProvinces",
+     *   description="Register a province",
+     *   @OA\RequestBody(
+     *       @OA\JsonContent(),
+     *       @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *          type="object",
+     *          required={"name"},
+     *          @OA\Property(property="name", type="text"),
+     *        )
+     *       ),
+     *   ),
+     *   @OA\Response(
+     *    response=201,
+     *    description="Successfully registered",
+     *    @OA\JsonContent(),
+     *   )
+     * )
      */
+
     public function store(Request $request)
     {
-        //data validation
         $request->validate([
             'name' => ['required', 'string', 'min:3', 'max:20']
         ]);
-        
-        //data creation
-        $province = Province::create([
-            'name' => $request->name,  
-        ]);
 
-        //return response (stored province data)
-        return $this->successResponse($province, 200, 'Province created successfully');
+        $province = Province::create([
+            'name' => $request->name,
+        ]);
+        return $this->successResponse(['province'=>$province], 201, 'Province created successfully');
     }
 
-    /**
-     * Display the specified resource.
-     *
+
+     /**
+     * @OA\Get(
+     * path="/api/provinces/{province}",
+     *   summary="Get A Single Province",
+     *   description="Get Provinces details",
+     *   operationId="GetProvinceDetails",
+     *   tags={"Provinces"},
+     *   security={ {"bearer":{} } },
+     *   @OA\Parameter(
+     *      name="province",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\Response(
+     *     response=200,
+     *       description="Fetched successfully",
+     *     @OA\MediaType(
+     *        mediaType="application/json",
+     *      )
+     *   )
+     * )
      */
     public function show(Province $province)
     {
-        //single sector
         $data = [
-            'message' => 'Sector Detail',
-            'sector' => $province,
-            'status' => 200,
+            'message' => 'Province Detail',
+            'province' => $province
         ];
 
         return $this->successResponse($data, 200);
@@ -63,28 +117,54 @@ class ProvinceController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
+     * @OA\Put(
+     * path="/api/provinces/{province}",
+     *   tags={"Provinces"},
+     *   security={ {"bearer":{} } },
+     *   summary="Update a province",
+     *   operationId="UpdateProvince",
+     *   description="update a province",
+     * @OA\Parameter(
+     *      name="province",
+     *      in="path",
+     *      required=true,
+     *      @OA\Schema(
+     *           type="string"
+     *      )
+     *   ),
+     *   @OA\RequestBody(
+     *       @OA\JsonContent(),
+     *       @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *          type="object",
+     *          required={"name"},
+     *          @OA\Property(property="name", type="text"),
+     *        )
+     *       ),
+     *   ),
+     *   @OA\Response(
+     *    response=200,
+     *    description="Successfully updated",
+     *    @OA\JsonContent(),
+     *   )
+     * )
      */
+
     public function update(Request $request, Province $province)
     {
-        //data validation
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:20']
-        ]);
-        
-        //update data
-        $province->update([
-            'name' => $request->name,  
+            'name'=>['required', 'string', 'min:3', 'max:20']
         ]);
 
-        //return response (updated province data)
+        $province->update([
+            'name' => $request->name,
+        ]);
+
         $data = [
             'message' => 'Province updated successfully',
             'province' => $province,
-            'status' => 200,
         ];
-
         return $this->successResponse($data, 200);
     }
 
