@@ -24,6 +24,8 @@ class AdminUser extends Seeder
             'password'=>Hash::make('admin2022'),
             'provinceId'=>1,
             'idNumber'=>Str::random(16),
+            'created_at'=>now(),
+            'updated_at'=>now(),
         ]);
     }
 }
