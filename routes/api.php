@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/user',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::post('/users',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::get('/users',[\App\Http\Controllers\UserController::class,'users']);
 Route::resource('roles', '\App\Http\Controllers\RoleController');
 Route::post("/login",[\App\Http\Controllers\UserController::class,'login']);
 Route::middleware('auth:sanctum')->post('/logout',[\App\Http\Controllers\UserController::class,'logout']);

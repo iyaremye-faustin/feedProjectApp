@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
+use App\Http\Resources\UsersCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -92,5 +93,32 @@ class UserController extends ApiController
         $request->user()->tokens()->delete();
         $data=['message'=>'logged out'];
         return $this->successResponse($data,200);
+    }
+      /**
+     * @OA\Get(
+     * path="/api/users",
+     *   summary="Get All Users",
+     *   description="Get users details",
+     *   operationId="GetUsersDetails",
+     *   tags={"Users"},
+     *   security={ {"bearer":{} } },
+     *
+     *   @OA\Response(
+     *     response=200,
+     *       description="Fetched successfully",
+     *     @OA\MediaType(
+     *        mediaType="application/json",
+     *      )
+     *   )
+     * )
+     */
+    public function users(){
+        try {
+            $users=User::all();
+            $data=["message"=>'List of users',"users"=>new UsersCollection($users)];
+            return $this->successResponse($data,200);
+        } catch (\Throwable $th) {
+            return $this->errorResponse($th,500,"Internal server error");
+        }
     }
 }

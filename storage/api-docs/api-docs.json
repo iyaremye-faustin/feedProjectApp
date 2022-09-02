@@ -5,7 +5,28 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/user": {
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get All Users",
+                "description": "Get users details",
+                "operationId": "GetUsersDetails",
+                "responses": {
+                    "200": {
+                        "description": "Fetched successfully",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearer": []
+                    }
+                ]
+            },
             "post": {
                 "tags": [
                     "Users"
