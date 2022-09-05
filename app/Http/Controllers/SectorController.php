@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\Sector;
 use Illuminate\Http\Request;
 
-class SectorController extends Controller
+class SectorController extends ApiController
 {
+
     /**
-     * Display a listing of the sector.
+     * @OA\Get(
+     * path="/api/sectors",
+     *   summary="Get All Sectors",
+     *   description="Get Sectors details",
+     *   operationId="GetSectorsDetails",
+     *   tags={"Sectors"},
+     *   security={ {"bearer":{} } },
      *
-     * */
+     *   @OA\Response(
+     *     response=200,
+     *       description="Fetched successfully",
+     *     @OA\MediaType(
+     *        mediaType="application/json",
+     *      )
+     *   )
+     * )
+     */
     public function index()
     {
         $sectors = Sector::orderBy('id', 'DESC')
                     ->get();
-        
         $data = [
             'message' => 'List of sectors',
             'sectors' => $sectors,
-            'status' => 200,
         ];
-
         return $this->successResponse($data, 200);
     }
 
@@ -36,10 +48,10 @@ class SectorController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:20'],
             'districtId' => ['required'],
         ]);
-        
+
         //data creation
         $sector = Sector::create([
-            'name' => $request->name,  
+            'name' => $request->name,
             'districtId' => $request->districtId,
         ]);
 
@@ -80,11 +92,11 @@ class SectorController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:20'],
             'districtId' => ['required']
         ]);
-        
+
         //update data
         $sector->update([
             'name' => $request->name,
-            'districtId' => $request->districtId,  
+            'districtId' => $request->districtId,
         ]);
 
         //return response (updated sector data)
@@ -97,5 +109,5 @@ class SectorController extends Controller
          return $this->successResponse($data, 200);
     }
 
-    
+
 }

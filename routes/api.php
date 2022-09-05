@@ -1,9 +1,6 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProvinceController;
-use App\Http\Controllers\SectorController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,13 +12,10 @@ use App\Http\Controllers\SectorController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-
-Route::resource('/province', ProvinceController::class);
-Route::resource('/sector', SectorController::class);
-
-Route::post('/user',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::post('/users',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::get('/users',[\App\Http\Controllers\UserController::class,'users']);
 Route::resource('roles', '\App\Http\Controllers\RoleController');
+Route::post("/login",[\App\Http\Controllers\UserController::class,'login']);
+Route::middleware('auth:sanctum')->post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
+Route::resource('/provinces', '\App\Http\Controllers\ProvinceController');
+Route::resource('/sectors', '\App\Http\Controllers\SectorController');

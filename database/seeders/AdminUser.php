@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -24,6 +25,8 @@ class AdminUser extends Seeder
             'password'=>Hash::make('admin2022'),
             'provinceId'=>1,
             'idNumber'=>Str::random(16),
+            'created_at'=>Carbon::now(),
+            'updated_at'=>Carbon::now(),
         ]);
     }
 }

@@ -19,7 +19,7 @@ class UserRegisterController extends ApiController
 {
     /**
      * @OA\Post(
-     * path="/api/user",
+     * path="/api/users",
      *   tags={"Users"},
      *   summary="Register a user",
      *   operationId="registerUsers",
