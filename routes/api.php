@@ -19,3 +19,4 @@ Route::post("/login",[\App\Http\Controllers\UserController::class,'login']);
 Route::middleware('auth:sanctum')->post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
 Route::resource('/provinces', '\App\Http\Controllers\ProvinceController');
 Route::resource('/sectors', '\App\Http\Controllers\SectorController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('/seasons', '\App\Http\Controllers\SeasonController');
