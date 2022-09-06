@@ -190,7 +190,7 @@ class SeasonController extends Controller
         ]);
         $data = [
             'message' => 'Season updated successfully',
-            'province' => $season,
+            'Season' => $season,
         ];
         return $this->successResponse($data, 200);
     }
