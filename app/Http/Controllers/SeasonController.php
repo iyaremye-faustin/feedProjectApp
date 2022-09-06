@@ -195,10 +195,8 @@ class SeasonController extends Controller
         return $this->successResponse($data, 200);
     }
 
-    /**
-     * @return \Illuminate\Http\Response
     
-     /**
+    /**
      * Delete the specified resource.
      /**
      * @OA\Delete(
