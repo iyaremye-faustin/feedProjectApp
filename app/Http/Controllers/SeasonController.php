@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Season;
 use Illuminate\Http\Request;
 
-class SeasonController extends Controller
+class SeasonController extends ApiController
 {
     /**
      * Display a listing of the resource.
@@ -17,7 +17,7 @@ class SeasonController extends Controller
      *   description="Get Seasons details",
      *   operationId="GetSeasonsDetails",
      *   tags={"Seasons"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,
@@ -32,7 +32,7 @@ class SeasonController extends Controller
     {
         $seasons = Season::orderBy('id', 'DESC')->get();
             $data = [
-            'message' => 'List of Season',
+            'message' => 'List of Seasons',
             'seasons' => $seasons,
             ];
         return $this->successResponse($data, 200);
@@ -44,7 +44,7 @@ class SeasonController extends Controller
      * @OA\Post(
      * path="/api/seasons",
      *   tags={"Seasons"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   summary="Register a season",
      *   operationId="registerSeasons",
      *   description="Register a season",
@@ -58,7 +58,7 @@ class SeasonController extends Controller
      *          required={"description"},
      *          required={"startDate"},
      *          required={"endDate"},
-     *              
+     *
      *          @OA\Property(property="name", type="text"),
      *          @OA\Property(property="description", type="text"),
      *          @OA\Property(property="startDate", type="text"),
@@ -100,7 +100,7 @@ class SeasonController extends Controller
      *   description="Get Season details",
      *   operationId="GetSeasonDetails",
      *   tags={"Seasons"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   @OA\Parameter(
      *      name="season",
      *      in="path",
@@ -134,8 +134,8 @@ class SeasonController extends Controller
     /**
      * @OA\Put(
      * path="/api/seasons/{season}",
-     *   tags={"Seasonss"},
-     *   security={ {"bearer":{} } },
+     *   tags={"Seasons"},
+     *   security={{"bearerAuth":{}}},
      *   summary="Update a season",
      *   operationId="UpdateSeason",
      *   description="update a season",
@@ -153,11 +153,6 @@ class SeasonController extends Controller
      *       mediaType="multipart/form-data",
      *       @OA\Schema(
      *          type="object",
-     *          required={"name"},
-     *          required={"description"},
-     *          required={"startDate"},
-     *          required={"endDate"},
-     * 
      *          @OA\Property(property="name", type="text"),
      *          @OA\Property(property="description", type="text"),
      *          @OA\Property(property="startDate", type="text"),
@@ -171,13 +166,13 @@ class SeasonController extends Controller
      *    @OA\JsonContent(),
      *   )
      * )
-     */ 
-     
+     */
+
     public function update(Request $request, Season $season)
     {
         $request->validate([
-            'name' => ['required', 'string', 'min:3', 'max:20'],
-            'description' => ['required'],
+            'name' => ['string', 'min:3', 'max:20'],
+            'description' => ['string'],
             'startDate' => ['string', 'min:8', 'max:13'],
             'endDate' => ['string', 'min:8', 'max:13'],
         ]);
@@ -195,17 +190,17 @@ class SeasonController extends Controller
         return $this->successResponse($data, 200);
     }
 
-    
+
     /**
      * Delete the specified resource.
-     /**
+     **
      * @OA\Delete(
      * path="/api/seasons/{season}",
      *   summary="Delete A Single Season",
      *   description="Delete Season details",
      *   operationId="DeleteSeasonDetails",
      *   tags={"Seasons"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   @OA\Parameter(
      *      name="season",
      *      in="path",

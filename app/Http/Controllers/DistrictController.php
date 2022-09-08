@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\District;
-use App\Models\Province;
 use Illuminate\Http\Request;
 
-class DistrictController extends Controller
+class DistrictController extends ApiController
 {
-   
+
     /**
      * Display a listing of the district.
      *
@@ -20,7 +19,7 @@ class DistrictController extends Controller
      *   description="Get Districts details",
      *   operationId="GetDistrictsDetails",
      *   tags={"Districts"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,
@@ -44,9 +43,9 @@ class DistrictController extends Controller
 
     /**
      * @OA\Post(
-     * path="/api/s",
+     * path="/api/districts",
      *   tags={"Districts"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   summary="Register a district",
      *   operationId="registerDistricts",
      *   description="Register a district",
@@ -85,7 +84,7 @@ class DistrictController extends Controller
         return $this->successResponse(['district'=>$district], 201, 'District created successfully');
     }
 
-    
+
     /**
      * @OA\Get(
      * path="/api/districts/{district}",
@@ -93,7 +92,7 @@ class DistrictController extends Controller
      *   description="Get Districts details",
      *   operationId="GetdistrictDetails",
      *   tags={"Districts"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   @OA\Parameter(
      *      name="district",
      *      in="path",
@@ -126,7 +125,7 @@ class DistrictController extends Controller
      * @OA\Put(
      * path="/api/districts/{district}",
      *   tags={"Districts"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   summary="Update a district",
      *   operationId="UpdateDistrict",
      *   description="update a district",
@@ -188,7 +187,7 @@ class DistrictController extends Controller
      *   description="Delete District details",
      *   operationId="DeleteDistrictDetails",
      *   tags={"Districts"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   @OA\Parameter(
      *      name="district",
      *      in="path",
@@ -218,5 +217,5 @@ class DistrictController extends Controller
         return $this->successResponse($data, 200);
     }
 
-    
+
 }

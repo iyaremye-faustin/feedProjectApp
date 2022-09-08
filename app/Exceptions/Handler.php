@@ -100,6 +100,6 @@ class Handler extends ExceptionHandler
             if (config('app.debug')==false) {
                 return $this->errorResponse("",500,"Unexpected error occured,please try again later!");
             }
-            return $this->errorResponse("",500,"Unexpected error occured,please try again later!");
+            return $this->errorResponse($e,500,"Unexpected error occured,please try again later!");
         }
 }

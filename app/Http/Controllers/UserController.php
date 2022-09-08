@@ -78,7 +78,7 @@ class UserController extends ApiController
      *   description="Log out",
      *   operationId="Logout",
      *   tags={"Users"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,
@@ -101,7 +101,7 @@ class UserController extends ApiController
      *   description="Get users details",
      *   operationId="GetUsersDetails",
      *   tags={"Users"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,

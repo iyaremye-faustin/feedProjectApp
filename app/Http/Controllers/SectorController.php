@@ -15,7 +15,7 @@ class SectorController extends ApiController
      *   description="Get Sectors details",
      *   operationId="GetSectorsDetails",
      *   tags={"Sectors"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,
@@ -41,6 +41,35 @@ class SectorController extends ApiController
      * Store a newly created resource in storage.
      *
      */
+     /**
+     * @OA\Post(
+     * path="/api/sectors",
+     *   tags={"Sectors"},
+     *   security={{"bearerAuth":{}}},
+     *   summary="Register a sector",
+     *   operationId="registerSectors",
+     *   description="Register a sector",
+     *   @OA\RequestBody(
+     *       @OA\JsonContent(),
+     *       @OA\MediaType(
+     *       mediaType="multipart/form-data",
+     *       @OA\Schema(
+     *          type="object",
+     *          required={"districtId"},
+     *          required={"name"},
+     *          @OA\Property(property="districtId", type="text"),
+     *          @OA\Property(property="name", type="text"),
+     *        )
+     *       ),
+     *   ),
+     *   @OA\Response(
+     *    response=201,
+     *    description="Successfully registered",
+     *    @OA\JsonContent(),
+     *   )
+     * )
+     */
+
     public function store(Request $request)
     {
         //data validation
@@ -69,6 +98,31 @@ class SectorController extends ApiController
      * Display the specified resource.
      *
      */
+    /**
+    * @OA\Get(
+        * path="/api/sectors/{sector}",
+        *   summary="Get A Single Sector",
+        *   description="Get Sector details",
+        *   operationId="GetSectorDetails",
+        *   tags={"Sectors"},
+        *   security={{"bearerAuth":{}}},
+        *   @OA\Parameter(
+        *      name="sector",
+        *      in="path",
+        *      required=true,
+        *      @OA\Schema(
+        *           type="string"
+        *      )
+        *   ),
+        *   @OA\Response(
+        *     response=200,
+        *       description="Fetched successfully",
+        *     @OA\MediaType(
+        *        mediaType="application/json",
+        *      )
+        *   )
+        * )
+       */
     public function show(Sector $sector)
     {
         //single sector
