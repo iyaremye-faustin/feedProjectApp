@@ -6,7 +6,6 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
-
 class RoleController extends ApiController
 {
     /**
@@ -20,8 +19,8 @@ class RoleController extends ApiController
      *   summary="Get All Roles",
      *   description="Get roles details",
      *   operationId="GetRolesDetails",
+     *   security={{"bearerAuth":{}}},
      *   tags={"Roles"},
-     *   security={ {"bearer":{} } },
      *
      *   @OA\Response(
      *     response=200,

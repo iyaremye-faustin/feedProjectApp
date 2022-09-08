@@ -18,7 +18,7 @@ class ProvinceController extends ApiController
      *   description="Get Provinces details",
      *   operationId="GetProvincesDetails",
      *   tags={"Provinces"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *
      *   @OA\Response(
      *     response=200,
@@ -44,7 +44,7 @@ class ProvinceController extends ApiController
      * @OA\Post(
      * path="/api/provinces",
      *   tags={"Provinces"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   summary="Register a province",
      *   operationId="registerProvinces",
      *   description="Register a province",
@@ -87,7 +87,7 @@ class ProvinceController extends ApiController
      *   description="Get Provinces details",
      *   operationId="GetProvinceDetails",
      *   tags={"Provinces"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   @OA\Parameter(
      *      name="province",
      *      in="path",
@@ -120,7 +120,7 @@ class ProvinceController extends ApiController
      * @OA\Put(
      * path="/api/provinces/{province}",
      *   tags={"Provinces"},
-     *   security={ {"bearer":{} } },
+     *   security={{"bearerAuth":{}}},
      *   summary="Update a province",
      *   operationId="UpdateProvince",
      *   description="update a province",

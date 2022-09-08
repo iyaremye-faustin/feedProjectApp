@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,10 +12,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/users',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
-Route::get('/users',[\App\Http\Controllers\UserController::class,'users']);
-Route::resource('roles', '\App\Http\Controllers\RoleController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->post('/users',[\App\Http\Controllers\Auth\UserRegisterController::class,'userRegister']);
+Route::middleware(['auth:sanctum', 'IsAdmin'])->get('/users',[\App\Http\Controllers\UserController::class,'users']);
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('roles', '\App\Http\Controllers\RoleController');
 Route::post("/login",[\App\Http\Controllers\UserController::class,'login']);
 Route::middleware('auth:sanctum')->post('/logout',[\App\Http\Controllers\UserController::class,'logout']);
-Route::resource('/provinces', '\App\Http\Controllers\ProvinceController');
-Route::resource('/sectors', '\App\Http\Controllers\SectorController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('/provinces', '\App\Http\Controllers\ProvinceController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('/sectors', '\App\Http\Controllers\SectorController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('/seasons', '\App\Http\Controllers\SeasonController');
+Route::middleware(['auth:sanctum', 'IsAdmin'])->resource('/districts', '\App\Http\Controllers\DistrictController');

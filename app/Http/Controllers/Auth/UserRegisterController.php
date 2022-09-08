@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Validator;
-
 class UserRegisterController extends ApiController
 {
     /**
@@ -24,6 +23,7 @@ class UserRegisterController extends ApiController
      *   summary="Register a user",
      *   operationId="registerUsers",
      *   description="Register a user",
+     *   security={{"bearerAuth":{}}},
      *   @OA\RequestBody(
      *       @OA\JsonContent(),
      *       @OA\MediaType(
